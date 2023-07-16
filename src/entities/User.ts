@@ -38,7 +38,9 @@ export class User extends BaseEntity {
     const u = await User.find({
       where: { slug: Like(`${slugify(this.name, { lower: true })}%`) }
     });
-    console.log(u);
-    this.slug = `${slugify(this.name, { lower: true })}${u.length > 0 ? `-${u.length}` : ''}`;
+    const slugifiedName = slugify(this.name, { lower: true });
+    const slugSuffix = u.length > 0 ? `-${u.length}` : '';
+
+    this.slug = `${slugifiedName}${slugSuffix}`;
   }
 }

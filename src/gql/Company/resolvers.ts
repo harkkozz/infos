@@ -1,4 +1,5 @@
 import { Company } from 'entities/Company';
+import { GraphQLError } from 'graphql';
 
 interface CompanyPayload {
   company: Company;
@@ -37,19 +38,30 @@ export const companyResolvers = {
   },
   Mutation: {
     createCompany: async (_, { company }: CompanyPayload) => {
-      const thisCompany = new Company();
+      try {
+        const thisCompany = new Company();
 
-      thisCompany.companyName = company.companyName;
-      thisCompany.city = company.city;
-      thisCompany.state = company.state;
-      thisCompany.email = company.email;
-      thisCompany.areaCode = company.areaCode;
-      thisCompany.phoneNumber = company.phoneNumber;
-      thisCompany.userId = company.userId;
+        thisCompany.companyName = company.companyName;
+        thisCompany.city = company.city;
+        thisCompany.state = company.state;
+        thisCompany.email = company.email;
+        thisCompany.areaCode = company.areaCode;
+        thisCompany.phoneNumber = company.phoneNumber;
+        thisCompany.userId = company.userId;
 
-      const data = await thisCompany.save();
+        const data = await thisCompany.save();
 
-      return { ...data };
+        return { ...data };
+      } catch (error) {
+        console.log(error.detail);
+        throw new GraphQLError(error.detail, {
+          extensions: {
+            http: {
+              status: 401
+            }
+          }
+        });
+      }
     },
     editCompany: async (_, { id, company }: EditCompanyPayload) => {
       const foundCompany = await Company.findOne({ where: { id } });
@@ -65,6 +77,16 @@ export const companyResolvers = {
       const updatedCompany = await foundCompany.save();
 
       return updatedCompany;
+    },
+    deleteCompany: async (_, { id }: { id: string }) => {
+      const company = await Company.findOne({ where: { id } });
+      try {
+        await company.remove();
+
+        return { id, companyName: company.companyName };
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

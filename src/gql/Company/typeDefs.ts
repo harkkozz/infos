@@ -13,6 +13,11 @@ export const companyTypeDefs = `#graphql
     userId: ID
   }
 
+  type DeletedCompany {
+    id: ID!
+    companyName: String
+  }
+
   input CompanyInput {
     companyName: String!
     email: String!
@@ -32,5 +37,6 @@ export const companyTypeDefs = `#graphql
   type Mutation {
     createCompany(company: CompanyInput!): Company!
     editCompany(id: String!, company: CompanyInput!): Company!
+    deleteCompany(id: String!): DeletedCompany
   }
 `;
