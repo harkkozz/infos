@@ -15,7 +15,8 @@
     "migration:run": "pnpm run typeorm migration:run",
     "migration:revert": "pnpm run typeorm migration:revert",
     "format": "prettier --write src",
-    "lint": "eslint src --fix --cache"
+    "lint": "eslint src --fix --cache",
+    "lint:tsc": "tsc --project tsconfig.json"
   },
   "author": "Haris Adilovic",
   "license": "ISC",
