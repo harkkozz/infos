@@ -3,18 +3,25 @@
     "require": ["tsconfig-paths/register"]
   },
   "compilerOptions": {
-    "outDir": "dist",
-    "lib": ["ES2022"],
-    "target": "ES2022",
-    "module": "CommonJS",
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
-    "types": ["node"],
-    "baseUrl": "src"
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "src",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "moduleResolution": "Node"
   },
   "exclude": ["node_modules", "dist", ".vscode"],
-  "include": ["src/**/*.ts", "src/**/d.ts", "src/db/dataSource.ts"]
+  "include": ["src/**/*.ts", "src/**/d.ts"]
 }
