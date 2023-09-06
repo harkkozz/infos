@@ -44,7 +44,9 @@ type Mutation {
 }
 
 input CreateCompanyInput {
-  """Example field (placeholder)"""
+  """
+  Example field (placeholder)
+  """
   companyName: String!
   state: String!
   city: String!
@@ -56,7 +58,9 @@ input CreateCompanyInput {
 }
 
 input UpdateCompanyInput {
-  """Example field (placeholder)"""
+  """
+  Example field (placeholder)
+  """
   companyName: String!
   state: String!
   city: String!
