@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type user {
+type User {
   id: ID!
   name: String!
   email: String!
@@ -14,14 +14,12 @@ type user {
 type Company {
   id: ID!
   companyName: String!
-  test: String!
   state: String!
   city: String!
   email: String!
   phoneNumber: String!
   areaCode: String!
-  user: user!
-  userId: String!
+  user: User!
   slug: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -33,8 +31,38 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  getCompanies: Company!
+  getCompanies: [Company!]
   getCompanyById(id: String!): Company!
-  searchCompany(query: String!): Company!
-  getUserById(userId: String!): user!
+  searchCompany(query: String!): [Company!]!
+  getUsers: [User!]!
+  getUserById(userId: String!): User!
+}
+
+type Mutation {
+  createCompany(createCompanyInput: CreateCompanyInput!): Company!
+  updateCompany(id: String!, updateCompanyInput: UpdateCompanyInput!): Company
+}
+
+input CreateCompanyInput {
+  """Example field (placeholder)"""
+  companyName: String!
+  state: String!
+  city: String!
+  email: String!
+  userId: String!
+  areaCode: String!
+  phoneNumber: String!
+  slug: String
+}
+
+input UpdateCompanyInput {
+  """Example field (placeholder)"""
+  companyName: String!
+  state: String!
+  city: String!
+  email: String!
+  userId: String!
+  areaCode: String!
+  phoneNumber: String!
+  slug: String
 }

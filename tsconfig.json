@@ -9,7 +9,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ESNext",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "src",
@@ -22,6 +22,6 @@
     "noFallthroughCasesInSwitch": false,
     "moduleResolution": "Node"
   },
-  "exclude": ["node_modules", "dist", ".vscode"],
-  "include": ["src/**/*.ts", "src/**/d.ts"]
+  "exclude": ["node_modules", "dist"],
+  "include": ["src/**/*.ts", "src/**/*spec*.ts", "src/**/d.ts"]
 }

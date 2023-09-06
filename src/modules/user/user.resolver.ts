@@ -15,14 +15,14 @@ export class UserResolver {
   //   return this.userService.create(createUserInput);
   // }
 
-  // @Query('user')
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
+  @Query(() => [UserEntity])
+  async getUsers() {
+    return this.userService.findAll();
+  }
 
   @Query(() => UserEntity)
   async getUserById(@Args('userId', { type: () => String }) userId: string) {
-    return await this.userService.getUser(userId);
+    return await this.userService.findOne(userId);
   }
 
   // @Mutation('updateUser')

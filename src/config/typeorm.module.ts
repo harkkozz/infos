@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { CompanyEntity } from 'modules/company/company.entity';
-import { UserEntity } from 'modules/user/user.entity';
+import { CompanyEntity } from 'modules/Company/company.entity';
+import { UserEntity } from 'modules/User/user.entity';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -16,11 +17,11 @@ import { UserEntity } from 'modules/user/user.entity';
         host: configService.get('DB_HOST'),
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
-        port: parseInt(configService.get('DB_PORT'), 10),
+        port: 5432,
         synchronize: false,
         ssl: false,
         entities: [CompanyEntity, UserEntity],
-        migrations: ['config/db/migrations/**/*.ts']
+        migrations: [join(__dirname, '..', 'db', 'migrations/**/*.ts')]
       })
     })
   ]
