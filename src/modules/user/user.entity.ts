@@ -8,10 +8,10 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 
-import { CompanyEntity } from 'modules/company/company.entity';
+import { CompanyEntity } from 'modules/Company/company.entity';
 
 @Entity('users')
-@ObjectType('user')
+@ObjectType('User')
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => ID)
@@ -33,19 +33,7 @@ export class UserEntity extends BaseEntity {
   @Field()
   slug: string;
 
-  @OneToMany(() => CompanyEntity, (company) => company)
+  @OneToMany(() => CompanyEntity, (company) => company.user)
   @Field(() => [CompanyEntity])
   company: CompanyEntity[];
-
-  // @BeforeInsert()
-  // @BeforeUpdate()
-  // async setSlug() {
-  //   const u = await User.find({
-  //     where: { slug: Like(`${slugify(this.name, { lower: true })}%`) }
-  //   });
-  //   const slugifiedName = slugify(this.name, { lower: true });
-  //   const slugSuffix = u.length > 0 ? `-${u.length}` : '';
-
-  //   this.slug = `${slugifiedName}${slugSuffix}`;
-  // }
 }

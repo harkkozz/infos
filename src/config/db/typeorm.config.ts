@@ -3,8 +3,8 @@ import { config } from 'dotenv';
 import { join } from 'path';
 import { DataSource } from 'typeorm';
 
-import { CompanyEntity } from 'modules/company/company.entity';
-import { UserEntity } from 'modules/user/user.entity';
+import { CompanyEntity } from 'modules/Company/company.entity';
+import { UserEntity } from 'modules/User/user.entity';
 
 config();
 

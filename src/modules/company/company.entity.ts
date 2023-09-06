@@ -10,7 +10,7 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 
-import { UserEntity } from 'modules/user/user.entity';
+import { UserEntity } from 'modules/User/user.entity';
 
 @Entity('companies')
 @ObjectType('Company')
@@ -47,13 +47,9 @@ export class CompanyEntity extends BaseEntity {
   @Field(() => UserEntity)
   user: UserEntity;
 
-  @Column()
-  @Field()
-  userId: string;
-
   @Column({ nullable: true })
   @Field()
-  slug: string;
+  slug?: string;
 
   @CreateDateColumn()
   @Field()
@@ -62,16 +58,4 @@ export class CompanyEntity extends BaseEntity {
   @UpdateDateColumn()
   @Field()
   updatedAt: Date;
-
-  // @BeforeInsert()
-  // @BeforeUpdate()
-  // async setSlug() {
-  //   const c = await {
-  //     where: { slug: Like(`${slugify(this.companyName, { lower: true })}%`) }
-  //   };
-
-  //   this.slug = `${slugify(this.companyName, { lower: true })}${
-  //     c.length > 0 ? `-${c.length}` : ''
-  //   }`;
-  // }
 }

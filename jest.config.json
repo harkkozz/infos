@@ -1,0 +1,14 @@
+{
+	"moduleDirectories": ["node_modules", "src"],
+	"moduleFileExtensions": ["js", "json", "ts"],
+	"testEnvironment": "node",
+	"testRegex": ".spec.ts$",
+	"transform": {
+		"^.+\\.ts$": "ts-jest"
+	},
+	"coverageDirectory": "./coverage",
+	"collectCoverage": true,
+	"moduleNameMapper": {
+		"^@module(.*)$": "<rootDir>/src/module$1"
+	}
+}

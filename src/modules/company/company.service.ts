@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
-// import { CreateCompanyInput } from './dto/create-company.input';
-// import { UpdateCompanyInput } from './dto/update-company.input';
 import { CompanyEntity } from './company.entity';
+import { CreateCompanyInput } from './dto/create-company.input';
+import slugify from 'slugify';
+import { UpdateCompanyInput } from './dto/update-company.input';
 
 @Injectable()
 export class CompanyService {
@@ -12,23 +13,20 @@ export class CompanyService {
     @InjectRepository(CompanyEntity)
     private readonly companyRepository: Repository<CompanyEntity>
   ) {}
-  // create(createCompanyInput: CreateCompanyInput) {
-  //   return 'This action adds a new company';
-  // }
 
-  async getCompanies(): Promise<Partial<CompanyEntity[]>> {
-    return await this.companyRepository.find();
+  async findAll(): Promise<CompanyEntity[]> {
+    return await this.companyRepository.find({ relations: ['user'] });
   }
 
-  async getCompanyById(id: string): Promise<CompanyEntity> {
+  async findOne(id: string): Promise<CompanyEntity> {
     return await this.companyRepository.findOne({
       where: { id }
     });
   }
 
-  async searchCompany(query: string): Promise<CompanyEntity[]> {
+  async search(query: string): Promise<CompanyEntity[]> {
     const data = await this.companyRepository
-      .createQueryBuilder('company')
+      .createQueryBuilder('companies')
       .where('LOWER(companies.companyName) like LOWER(:query)')
       .orWhere('LOWER(city) like LOWER(:query)')
       .orWhere('LOWER(state) like LOWER(:query)')
@@ -36,5 +34,48 @@ export class CompanyService {
       .getMany();
 
     return data;
+  }
+
+  async create(createCompanyInput: CreateCompanyInput) {
+    try {
+      await this.companyRepository
+        .createQueryBuilder()
+        .insert()
+        .into(CompanyEntity)
+        .values(createCompanyInput)
+        .execute();
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    return createCompanyInput;
+  }
+
+  async update(id: string, updateCompanyInput?: UpdateCompanyInput) {
+    try {
+      if (id) {
+        const slug = await this.generateSlug(updateCompanyInput.companyName);
+        const companyInput: UpdateCompanyInput = { ...updateCompanyInput, slug };
+        await this.companyRepository
+          .createQueryBuilder()
+          .update(CompanyEntity)
+          .set({ ...companyInput })
+          .where('id = :id', { id })
+          .execute();
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    return updateCompanyInput;
+  }
+
+  async generateSlug(companyName: string): Promise<string> {
+    const slug = slugify(companyName, { lower: true });
+    const existingCompanies = await this.companyRepository.find({
+      where: { slug: Like(`${slug}%`) }
+    });
+
+    return `${slug}-${existingCompanies?.length ?? 0}`;
   }
 }

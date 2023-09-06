@@ -1,7 +1,28 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { InputType, Field } from '@nestjs/graphql';
 
-import { CreateCompanyInput } from './create-company.input';
+@InputType()
+export class UpdateCompanyInput {
+  @Field(() => String, { description: 'Example field (placeholder)' })
+  companyName: string;
 
-export class UpdateCompanyInput extends PartialType(CreateCompanyInput) {
-  id: number;
+  @Field(() => String)
+  state: string;
+
+  @Field(() => String)
+  city: string;
+
+  @Field(() => String)
+  email: string;
+
+  @Field(() => String)
+  userId: string;
+
+  @Field(() => String)
+  areaCode: string;
+
+  @Field(() => String)
+  phoneNumber: string;
+
+  @Field(() => String, { nullable: true })
+  slug: string;
 }
