@@ -16,6 +16,7 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lint:tsc": "tsc --project tsconfig.json",
+    "lint:ts-coverage": "type-coverage",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -77,6 +78,7 @@
     "ts-loader": "^9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths": "^4.2.0",
+    "type-coverage": "^2.26.2",
     "typescript": "5.2.2"
   },
   "jest": {
@@ -95,6 +97,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-
   }
 }
